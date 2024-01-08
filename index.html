@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> movie </title>
+  <script>
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTg5YjJmZTBiOWQ3NWExNGQzMWMwM2EwMWViZmMxYyIsInN1YiI6IjY1OTRmM2M0YTY5OGNmNmNmMDQzYTExZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zr1q2WXcxaJmGs0cx8LLGmNxmiVmKFC0PLbJbrQvG94'
+      }
+    };
+
+    fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-Us&page=1', options)
+      .then(response => response.json())
+
+      .then(response => {
+        let movie_data = response['results'];
+        let temp_html = ``;
+        movie_data.forEach(i => {
+          let img_url = 'https://image.tmdb.org/t/p/w300' + i['poster_path'];
+          let movie_title = i['title'];
+          let overview = i['overview'];
+          let vote = i['vote_average'];
+          let id = i['id'];
+
+          temp_html += `
+      <div class="col" onclick="alert('영화 id : ${id}')" >
+          <img src='${img_url}' alt="" >         
+           <h3>${movie_title}</h3>
+            <p>${overview}</p>
+            <p>⭐ ${vote}</p>
+       </a>
+    </div>`;
+          document.getElementById('cards-box').innerHTML = temp_html;
+        })
+      })
+
+    function search_btn() {
+      const movie_name_input = document.getElementById("movie_name_input").value;
+      const card_arr = document.getElementsByClassName('col');
+
+      const card_name_arr = [];
+      for (let i = 0; i < card_arr.length; i++) {
+        card_name_arr[i] = card_arr[i].getElementsByTagName('h3')[0].innerText;
+        card_arr[i].style = 'display:none';
+      }
+
+      let movie_name = '';
+      for (let i = 0; i < card_name_arr.length; i++) {
+        movie_name = card_name_arr.filter(
+          el => el.toUpperCase().indexOf(movie_name_input.toUpperCase()) > -1
+        )[i];
+        for (let i = 0; i < card_name_arr.length; i++) {
+          if (movie_name === card_name_arr[i]) {
+            card_arr[i].style = 'display:inline-block';
+          }
+        }
+      }
+    }
+
+  </script>
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbit&display=swap');
+
+  * {
+    font-family: 'Orbit', sans-serif;
+  }
+
+  .hd {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    transition: all 0.4s;
+  }
+
+  .search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    transition: all 0.4s;
+  }
+
+  .card_bx {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+  }
+
+  .col {
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.24);
+    margin: 30px;
+    padding: 10px;
+    width: 300px;
+    justify-self: center;
+    background-color: #b2b2b2;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+</style>
+
+<body>
+
+  <section id="movie_search_cards">
+    <dev class="hd">
+      <h1>MOVIES</h1>
+    </dev>
+    <div id="search" class="search">
+      <form>
+        <input type="text" style="display:none;" />
+        <input id="movie_name_input" placeholder="영화를 검색해보세요!!" type="text"
+          onkeyup="if(event.keyCode==13){search_btn()}">
+        <button type="button" onclick="search_btn()">검색</button>
+      </form>
+    </div>
+
+    <div id="cards">
+      <div class="inner">
+        <div id="cards-box" class="card_bx">
+          <div class="col"><a href=""><img src="" alt=""></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+
+</html>
