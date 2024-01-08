@@ -13,7 +13,7 @@
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTg5YjJmZTBiOWQ3NWExNGQzMWMwM2EwMWViZmMxYyIsInN1YiI6IjY1OTRmM2M0YTY5OGNmNmNmMDQzYTExZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zr1q2WXcxaJmGs0cx8LLGmNxmiVmKFC0PLbJbrQvG94'
       }
     };
-
+    //api에서 page를 전부다 끌어오고 싶은데 주소정보 끝을 어떻게 수정해야할지 막막합니다.
     fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-Us&page=1', options)
       .then(response => response.json())
 
@@ -38,7 +38,7 @@
           document.getElementById('cards-box').innerHTML = temp_html;
         })
       })
-
+      //검색기능인데 열심히 검색해서 만들었지만 몇몇 기능은 이해가 가지않습니다.
     function search_btn() {
       const movie_name_input = document.getElementById("movie_name_input").value;
       const card_arr = document.getElementsByClassName('col');
@@ -106,11 +106,10 @@
     cursor: pointer;
     user-select: none;
   }
-
 </style>
 
 <body>
-
+//아직 class 와 id 구분하는게 쉽지않음
   <section id="movie_search_cards">
     <dev class="hd">
       <h1>MOVIES</h1>
