@@ -86,16 +86,3 @@ function search_btn() {
 //     }
 //   }
 // }
-
-// 과제 해설 영상에서 다른분 검색기능을 해설해주시는걸 보고 너무 복잡하게 생각하고 있었다는걸 알았고
-// 카드를 반복해서 생성하는 것을 from과 forEach 을 통해서 실행해주고 includes 를 이용하여
-// 카드를 보여주냐 안보여주냐를 정할수 있게 구상하였습니다.
-function search_btn() {
-  const movie_name_input = document.getElementById("movie_name_input").value.toUpperCase();
-  const card_arr = document.getElementsByClassName("col");
-
-  Array.from(card_arr).forEach((card) => {
-    const cardName = card.getElementsByTagName("h3")[0].innerText.toUpperCase();
-    card.style.display = cardName.includes(movie_name_input) ? "inline-block" : "none";
-  });
-}
