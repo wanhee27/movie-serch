@@ -3,115 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>movie</title>
-    <script>
-      const options = {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTg5YjJmZTBiOWQ3NWExNGQzMWMwM2EwMWViZmMxYyIsInN1YiI6IjY1OTRmM2M0YTY5OGNmNmNmMDQzYTExZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zr1q2WXcxaJmGs0cx8LLGmNxmiVmKFC0PLbJbrQvG94",
-        },
-      };
-      //api에서 page를 전부다 끌어오고 싶은데 주소정보 끝을 어떻게 수정해야할지 막막합니다.
-      fetch(
-        "https://api.themoviedb.org/3/movie/top_rated?language=en-Us&page=1",
-        options
-      )
-        .then((response) => response.json())
 
-        .then((response) => {
-          let movie_data = response["results"];
-          let temp_html = ``;
-          movie_data.forEach((i) => {
-            let img_url = "https://image.tmdb.org/t/p/w300" + i["poster_path"];
-            let movie_title = i["title"];
-            let overview = i["overview"];
-            let vote = i["vote_average"];
-            let id = i["id"];
+    <!-- css -->
+    <link rel="stylesheet" href="/reset.css" />
+    <link rel="stylesheet" href="/main.css" />
+    <!-- js script가 body가 끝나기 전에 위치하는 것도 좋지만 모듈을 사용하는것이 좀더 깔끔할것 같다. -->
+    <script defer src="main.js"></script>
 
-            temp_html += `
-      <div class="col" onclick="alert('영화 id : ${id}')" >
-          <img src='${img_url}' alt="" >         
-           <h3>${movie_title}</h3>
-            <p>${overview}</p>
-            <p>⭐ ${vote}</p>
-       </a>
-    </div>`;
-            document.getElementById("cards-box").innerHTML = temp_html;
-          });
-        });
-      //검색기능인데 열심히 검색해서 만들었지만 몇몇 기능은 이해가 가지않습니다.
-      function search_btn() {
-        const movie_name_input =
-          document.getElementById("movie_name_input").value;
-        const card_arr = document.getElementsByClassName("col");
-
-        const card_name_arr = [];
-        for (let i = 0; i < card_arr.length; i++) {
-          card_name_arr[i] =
-            card_arr[i].getElementsByTagName("h3")[0].innerText;
-          card_arr[i].style = "display:none";
-        }
-
-        let movie_name = "";
-        for (let i = 0; i < card_name_arr.length; i++) {
-          movie_name = card_name_arr.filter(
-            (el) =>
-              el.toUpperCase().indexOf(movie_name_input.toUpperCase()) > -1
-          )[i];
-          for (let i = 0; i < card_name_arr.length; i++) {
-            if (movie_name === card_name_arr[i]) {
-              card_arr[i].style = "display:inline-block";
-            }
-          }
-        }
-      }
-    </script>
+    <title>Movie</title>
   </head>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Orbit&display=swap");
-
-    * {
-      font-family: "Orbit", sans-serif;
-    }
-
-    .hd {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100px;
-      transition: all 0.4s;
-    }
-
-    .search {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 50px;
-      transition: all 0.4s;
-    }
-
-    .card_bx {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      justify-content: center;
-    }
-
-    .col {
-      box-shadow: 0 8px 10px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.24);
-      margin: 30px;
-      padding: 10px;
-      width: 300px;
-      justify-self: center;
-      background-color: #b2b2b2;
-      border-radius: 5px;
-      cursor: pointer;
-      user-select: none;
-    }
-  </style>
 
   <body>
     <!-- 아직 class 와 id 구분하는게 쉽지않음 -->
